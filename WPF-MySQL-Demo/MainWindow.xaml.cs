@@ -40,7 +40,13 @@ namespace WPF_MySQL_Demo
             {
                 CapsLockStatus.Foreground = Brushes.Red;
             }
-
+            else
+            {
+                CapsLockStatus.Foreground = Brushes.Gray;
+            }
+            if(isScrollLockToggled){
+                ScrollLockStatus.Foreground = Brushes.Red;
+            }
             else
             {
                 ScrollLockStatus.Foreground = Brushes.Gray;
@@ -83,16 +89,16 @@ namespace WPF_MySQL_Demo
                 string sql = "SELECT * FROM locations";
                 if (!searchTerm.Equals(""))
                 {
-                    sql += "WHERE location_name LIKE '%" + searchTerm + "%'";
+                    sql += " WHERE location_name LIKE '%" + searchTerm + "%'";
 
                 }
                 MessageTextBox.Text = sql;
                 using (MySqlConnection connection = new MySqlConnection(connStr))
                 {
                     connection.Open();
-                    MessageTextBox.Text = "Processing...";
+                    MessageTextBlock.Text = "Processing...";
 
-                    await Task.Delay(1250);
+                   await Task.Delay(1250);
                     using (MySqlCommand cmdSel = new MySqlCommand(sql, connection))
                     {
                         DataTable dt = new DataTable();
